@@ -1,0 +1,122 @@
+version: "3.8"
+
+services:
+  # User Service Database
+  user-db:
+    image: postgres:16-alpine
+    container_name: user-db
+    environment:
+      POSTGRES_USER: userservice
+      POSTGRES_PASSWORD: userpass123
+      POSTGRES_DB: userdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - user-data:/var/lib/postgresql/data
+    networks:
+      - microservices
+
+  # Product Service Database
+  product-db:
+    image: postgres:16-alpine
+    container_name: product-db
+    environment:
+      POSTGRES_USER: productservice
+      POSTGRES_PASSWORD: productpass123
+      POSTGRES_DB: productdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - product-data:/var/lib/postgresql/data
+    networks:
+      - microservices
+
+  # Order Service Database
+  order-db:
+    image: postgres:16-alpine
+    container_name: order-db
+    environment:
+      POSTGRES_USER: orderservice
+      POSTGRES_PASSWORD: orderpass123
+      POSTGRES_DB: orderdb
+    ports:
+      - "5434:5432"
+    volumes:
+      - order-data:/var/lib/postgresql/data
+    networks:
+      - microservices
+
+  # User Service
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    container_name: user-service
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - DB_HOST=user-db
+      - DB_PORT=5432
+      - DB_USERNAME=userservice
+      - DB_PASSWORD=userpass123
+      - DB_DATABASE=userdb
+    depends_on:
+      - user-db
+    networks:
+      - microservices
+    restart: unless-stopped
+
+  # Product Service
+  product-service:
+    build:
+      context: ./product-service
+      dockerfile: Dockerfile
+    container_name: product-service
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=production
+      - PORT=3002
+      - DB_HOST=product-db
+      - DB_PORT=5432
+      - DB_USERNAME=productservice
+      - DB_PASSWORD=productpass123
+      - DB_DATABASE=productdb
+    depends_on:
+      - product-db
+    networks:
+      - microservices
+    restart: unless-stopped
+
+  # Order Service
+  order-service:
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+    container_name: order-service
+    ports:
+      - "3003:3003"
+    environment:
+      - NODE_ENV=production
+      - PORT=3003
+      - DB_HOST=order-db
+      - DB_PORT=5432
+      - DB_USERNAME=orderservice
+      - DB_PASSWORD=orderpass123
+      - DB_DATABASE=orderdb
+    depends_on:
+      - order-db
+    networks:
+      - microservices
+    restart: unless-stopped
+
+volumes:
+  user-data:
+  product-data:
+  order-data:
+
+networks:
+  microservices:
+    driver: bridge
