@@ -5,15 +5,27 @@ This project contains three microservices built with NestJS:
 - **Product Service** - Manages product data
 - **Order Service** - Manages order data
 
+## Features
+
+- ✅ Full CRUD operations
+- ✅ PostgreSQL database with TypeORM
+- ✅ Input validation with class-validator
+- ✅ Swagger API documentation
+- ✅ Global exception handling
+- ✅ Response transformation
+- ✅ Request logging
+- ✅ Docker support
+- ✅ Unit and E2E testing
+
 ## Tech Stack
 
-- NestJS
-- TypeORM
-- PostgreSQL
-- Docker & Docker Compose
-- Swagger for API documentation
-- Class Validator & Class Transformer
-- Jest for testing
+- **NestJS** - Progressive Node.js framework
+- **TypeORM** - ORM for TypeScript and JavaScript
+- **PostgreSQL** - Relational database
+- **Swagger** - API documentation
+- **Class Validator & Class Transformer** - Validation decorators
+- **Docker** - Containerization
+- **Jest** - for testing
 
 ## Getting Started
 
@@ -178,9 +190,10 @@ src/
 ## Best Practices Implemented
 
 - ✅ Modular architecture with separation of concerns
-- ✅ DTOs for request validation
+- ✅ DTOs for request validation and type safety
 - ✅ Custom exception filters
 - ✅ Response transformation interceptors
+- ✅ Request/response logging
 - ✅ Swagger API documentation
 - ✅ Environment-based configuration
 - ✅ Database migrations
@@ -188,6 +201,18 @@ src/
 - ✅ Docker containerization
 - ✅ Error handling and logging
 - ✅ Type safety with TypeScript
+
+## Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| NODE_ENV | Environment | development |
+| PORT | Server port | 3003 |
+| DB_HOST | Database host | localhost |
+| DB_PORT | Database port | 5434 |
+| DB_USERNAME | Database username | orderservice |
+| DB_PASSWORD | Database password | orderpass123 |
+| DB_DATABASE | Database name | orderdb |
 
 ## Comment
 
